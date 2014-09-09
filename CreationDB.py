@@ -2,7 +2,7 @@
 Ce fichier possède quelques fonctions permettant d'accéder à des données en base de données.
 Inspirez-vous librement de ce code source pour l'adapter à vos besoins.
 
-    AccesDB.py, exemple d'utilisation
+    CreationDB.py, exemple d'utilisation
     Copyright (C) 2012-2014  Grégory DAVID, Géraldine TAYSSE
 
     This program is free software: you can redistribute it and/or modify
