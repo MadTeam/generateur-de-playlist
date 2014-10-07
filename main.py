@@ -74,20 +74,26 @@ for ARG in ['name', 'format', 'length']:
 		if(scan.verbose):
 			print("DEBUG : "+ARG+" : "+elem)
 
-#validOptArgs[5]
-#i = 0
+validOptArgs[5]
+i = 0
 
-'''for ARG in ['genre', 'susgenre', 'artist', 'band', 'title']:
+for ARG in ['genre', 'susgenre', 'artist', 'album', 'title']:
 	elem = getattr(scan, ARG)
 	if elem is not None:
 		logging.debug(ARG+" : \n-1 : "+elem[0]+"\n-2 : "+elem[1]) #affiche la valeur envoyee pour chaque argument
 		convert(elem[1], 666) #convertit l'argument 2 (pourcentage) en un entier
 		validOptArgs[i] = chkValue(elem[1], 0, 101) #verifie si la valeur absolue de l'argument 2 est compris entre 1 et 100
-		i++'''
+		
+	if len(elem): #idee: partir avec un len() pour l'addition de deux valeurs (au minimum)    
+		validOptArgs[i] = len(elem[1])
+		if len(elem[1]) > 100:
+			logging.warning(elem[1]+" is higher than 100")
+			logging.info("Please, retry the process")
 
 
-'''
-if(scan.genre):
+
+
+'''if(scan.genre):
     #le genre est donc renseigne
     if(diffType(scan.genre[0], "str")):'''
         
