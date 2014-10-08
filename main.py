@@ -60,7 +60,7 @@ obli.add_argument("length", help="total length of the playlist ('h' to hour, 'm'
 opt.add_argument("-h", "--help", help="show help", action="help")
 opt.add_argument("-v", "--verbose", help="all informations will be visible like debug information", action="store_true")
 opt.add_argument("-G", "--genre", nargs=2, help="genre and percentage of genre")
-opt.add_argument("-g", "--subgenre", nargs=2, help="subgenre and percentage of subgenre")
+opt.add_argument("-g", "--susgenre", nargs=2, help="susgenre and percentage of subgenre")
 opt.add_argument("-a", "--artist", nargs=2, help="artist and percentage of artist")
 opt.add_argument("-A", "--album", nargs=2, help="album and percentage of album")
 opt.add_argument("-t", "--title", nargs=2, help="title ad percentage of title")
@@ -83,12 +83,17 @@ for ARG in ['genre', 'susgenre', 'artist', 'album', 'title']:
 		logging.debug(ARG+" : \n-1 : "+elem[0]+"\n-2 : "+elem[1]) #affiche la valeur envoyee pour chaque argument
 		convert(elem[1], 666) #convertit l'argument 2 (pourcentage) en un entier
 		validOptArgs[i] = chkValue(elem[1], 0, 101) #verifie si la valeur absolue de l'argument 2 est compris entre 1 et 100
+	
+		#idee: partir avec un len() pour l'addition de deux valeurs (au minimum)
+		#correction: regrouper toutes les saisies dans un match, puis ensuite totaliser les entiers
 		
-	if len(elem): #idee: partir avec un len() pour l'addition de deux valeurs (au minimum)    
+	#if match.group(elem[i]):
 		validOptArgs[i] = len(elem[1])
 		if len(elem[1]) > 100:
 			logging.warning(elem[1]+" is higher than 100")
-			logging.info("Please, retry the process")
+			logging.info("Please, retry the process") #
+		#else:
+			#transformer les saisies en données pour la transformation en playlist
 
 
 
@@ -100,7 +105,7 @@ for ARG in ['genre', 'susgenre', 'artist', 'album', 'title']:
 
 
 '''scan.genre[1] = convert(scan.genre[1], 666)
-scan.sgenre[1] = convert(scan.sgenre[1], 666)
-scan.artiste[1] = convert(scan.artiste[1], 666)
-scan.album[1] = convert(scan.album[1], 666)
-scan.titre[1] = convert(scan.titre[1], 666)'''
+'''scan.sgenre[1] = convert(scan.sgenre[1], 666)
+'''scan.artiste[1] = convert(scan.artiste[1], 666)
+'''scan.album[1] = convert(scan.album[1], 666)
+'''scan.titre[1] = convert(scan.titre[1], 666)'''
