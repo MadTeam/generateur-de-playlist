@@ -2,19 +2,17 @@
 # -*- coding: utf-8 -*-
 
 '''importation des bibliotheques nescessaires'''
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
+from config import *
 
-'''importation des bibliotheques nescessaires'''
-from config import log
+'''argparse'''
+'''parser = argparse()
+scan = parser.parse_args() #la variable 'scan' conservera l'ensemble des arguments'''
 
 '''logging'''
-one = log(10, "%(levelname)s %(asctime)s : %(message)s", 0)
-logger = one.const();
+fmt = "%(levelname)s %(asctime)s : %(message)s"
+datefmt="%d/%M/%Y - %I:%M"
+log = logging('playlist.log', True, fmt, datefmt)
 
-logger.debug("test")
 
-'''logging.basicConfig(filename="journal.log", level=logging.DEBUG, format="%(levelname)s %(asctime)s : %(message)s", datefmt="%d/%M/%Y - %I:%M")
-logger = logging.getLogger()
-handler = logging.StreamHandler()
-handler.setLevel(10)'''
+functions.init(log) #ajout du fichier de log dans les functions pour le mode verbose
+functions.convert("35d", 666)
