@@ -5,43 +5,32 @@
 from config import *
 
 '''argparse'''
-'''parser = argparse()
-scan = parser.parse_args() #la variable 'scan' conservera l'ensemble des arguments'''
+parser = argparse()
+scan = parser.parse_args() #la variable 'scan' conservera l'ensemble des arguments
 
 '''logging'''
 fmt = "%(levelname)s %(asctime)s : %(message)s"
-datefmt="%d/%M/%Y - %I:%M"
-log = logging('playlist.log', True, fmt, datefmt)
-
-###############################################
+datefmt="%d/%m/%Y - %H:%M:%S"
+log = logging('playlist.log', scan.verbose, fmt, datefmt)
 
 for ARG in ['name', 'format', 'length']:
 	elem = getattr(scan, ARG)
 	if elem is not None:
-		logging.debug(ARG+" : "+elem)
-		if(scan.verbose):
-			print("DEBUG : "+ARG+" : "+elem)
+		log.debug(ARG+" -> "+elem)
 
-validOptArgs[5]
-i = 0
+functions.init(log)
 
-for ARG in ['genre', 'susgenre', 'artist', 'album', 'title']:
-	elem = getattr(scan, ARG)
-	if elem is not None:
-		logging.debug(ARG+" : \n-1 : "+elem[0]+"\n-2 : "+elem[1]) #affiche la valeur envoyee pour chaque argument
-		convert(elem[1], 666) #convertit l'argument 2 (pourcentage) en un entier
-		validOptArgs[i] = chkValue(elem[1], 0, 101) #verifie si la valeur absolue de l'argument 2 est compris entre 1 et 100
-	
-		#idee: partir avec un len() pour l'addition de deux valeurs (au minimum)
-		#correction: regrouper toutes les saisies dans un match, puis ensuite totaliser les entiers
+for ARG in ['genre', 'subgenre', 'artist', 'album', 'title']:
+	i = 0
+	if getattr(scan, ARG) is not None:
+		elem = getattr(scan, ARG)
 		
-	#if match.group(elem[i]):
-		validOptArgs[i] = len(elem[1])
-		if len(elem[1]) > 100:
-			logging.warning(elem[1]+" is higher than 100")
-			logging.info("Please, retry the process") #
-		#else:
-			#transformer les saisies en données pour la transformation en playlist
+#############################""""
+		while i < len(elem):
+			log.debug(ARG+" : \n\t-1 : "+str(elem[0])+"\n\t-2 : "+str(elem[1])) #affiche la valeur envoyee pour chaque argument
+			elem[1] = functions.convert(elem[1], 666) #convertit l'argument 2 (pourcentage) en un entier
+			functions.chkValue(elem[1], 0, 101) #verifie si la valeur absolue de l'argument 2 est compris entre 1 et 100
+		
 
 
 

@@ -64,21 +64,21 @@ class functions:
 				variable = int(variable)
 				return variable
 		except ValueError:
-			self._log.error("converting of "+variable+" to integer failed")
+			self._log.error("converting of "+str(variable)+" to integer failed")
 			return False
 
 	def chkValue(self, variable, minValue, maxValue): #verifie si la valeur absolue d'une variable est comprise strictement entre deux valeur
 		try:
 			variable = abs(variable)
 			if minValue < variable < maxValue:
-				self._log.info("the argument value of "+variable+" is accepted")
+				self._log.info("the argument value of "+str(variable)+" is accepted")
 				return True
 			else:
 				variable = None
-				self._log.warning("the argument value of "+variable+" is invalid")
+				self._log.warning("the argument value of "+str(variable)+" is invalid")
 				return False
 		except ValueError:
-			self._log.error("converting of "+variable+" to absolute integer failed")
+			self._log.error("converting of "+str(variable)+" to absolute integer failed")
 			return False
 
 	init = classmethod(init)
