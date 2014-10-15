@@ -24,7 +24,6 @@ def argparse():
 
 	return parser
 
-
 def logging(pathFile, stdOut=False, fmt=None, datefmt=None):
 	import logging
 
@@ -81,7 +80,32 @@ class functions:
 			self._log.error("converting of "+str(variable)+" to absolute integer failed")
 			return False
 
+	def getSqlBdd(self, user, addr, bdd):
+		import sqlalchemy as sql
+	
+		try:
+			engine = sql.create_engine('postgresql://'+user+'@'+addr+'/'+bdd)
+			bdd = engine.connect()
+		except:
+			self._log.error("connection to "+addr+'/'+bdd+' with '+user+' failed')
+
+		metadata = sql.MetaData()
+		morceaux = sql.Table('morceaux', metadata,
+			sql.Column('chemin', sql.String, primary_key=True),
+			sql.Column('titre', sql.String),
+			sql.Column('artiste', sql.String),
+			sql.Column('album', sql.String),
+			sql.Column('genre', sql.String),
+			sql.Column('sousgenre', sql.String),
+			sql.Column('duree', sql.String),
+		)
+
+		query = sql.select([morceaux])
+		result = bdd.execute(query)
+		return result
+
 	init = classmethod(init)
 	diffType = classmethod(diffType)
 	convert = classmethod(convert)
 	chkValue = classmethod(chkValue)
+	getSqlBdd = classmethod(getSqlBdd)
