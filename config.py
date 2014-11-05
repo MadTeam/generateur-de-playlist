@@ -16,11 +16,11 @@ def argparse():
 	#arguments optionnels
 	opt.add_argument("-h", "--help", help="show help", action="help")
 	opt.add_argument("-v", "--verbose", help="all informations will be visible like debug information", action="store_true")
-	opt.add_argument("-G", "--genre", nargs=2, help="genre and percentage of genre")
-	opt.add_argument("-g", "--subgenre", nargs=2, help="subgenre and percentage of subgenre")
-	opt.add_argument("-a", "--artist", nargs=2, help="artist and percentage of artist")
-	opt.add_argument("-A", "--album", nargs=2, help="album and percentage of album")
-	opt.add_argument("-t", "--title", nargs=2, help="title ad percentage of title")
+	opt.add_argument("-G", "--genre", nargs=2, action="append", help="genre and percentage of genre")
+	opt.add_argument("-g", "--subgenre", nargs=2, action="append", help="subgenre and percentage of subgenre")
+	opt.add_argument("-a", "--artist", nargs=2, action="append", help="artist and percentage of artist")
+	opt.add_argument("-A", "--album", nargs=2, action="append", help="album and percentage of album")
+	opt.add_argument("-t", "--title", nargs=2, action="append", help="title ad percentage of title")
 
 	return parser
 
@@ -86,23 +86,23 @@ class functions:
 		try:
 			engine = sql.create_engine('postgresql://'+user+'@'+addr+'/'+bdd)
 			bdd = engine.connect()
+			metadata = sql.MetaData()
+			morceaux = sql.Table('morceaux', metadata,
+				sql.Column('chemin', sql.String, primary_key=True),
+				sql.Column('titre', sql.String),
+				sql.Column('artiste', sql.String),
+				sql.Column('album', sql.String),
+				sql.Column('genre', sql.String),
+				sql.Column('sousgenre', sql.String),
+				sql.Column('duree', sql.String),
+			)
+			query = sql.select([morceaux])
+			result = bdd.execute(query)
+			return result
 		except:
 			self._log.error("connection to "+addr+'/'+bdd+' with '+user+' failed')
-
-		metadata = sql.MetaData()
-		morceaux = sql.Table('morceaux', metadata,
-			sql.Column('chemin', sql.String, primary_key=True),
-			sql.Column('titre', sql.String),
-			sql.Column('artiste', sql.String),
-			sql.Column('album', sql.String),
-			sql.Column('genre', sql.String),
-			sql.Column('sousgenre', sql.String),
-			sql.Column('duree', sql.String),
-		)
-
-		query = sql.select([morceaux])
-		result = bdd.execute(query)
-		return result
+			quit()
+		
 
 	init = classmethod(init)
 	diffType = classmethod(diffType)
